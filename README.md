@@ -9,9 +9,9 @@
 
 ## Usage 
 
-```sh
-  chmod +x coronastat.sh 
-  ./coronastat.sh 
+```bash
+  chmod +x coronastat 
+  ./coronastat <Country Name> 
 ```
 
 ## Credit 

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+
+[ "$(stat -c %y ~/.cache/corona 2>/dev/null | cut -d" " -f1)" != "$(date '+%Y-%m-%d')" ] && curl -s  https://corona-stats.online/ > ~/.cache/corona 
+
+
+GetCountry(){
+  if [ "$1" = "" ]
+  then
+    echo "Usage: corona <Country Name>" 
+    exit 1
+  elif [ "$1" = "reset" ]
+  then
+    rm ~/.cache/corona 
+    echo "reseted SuccessFully"
+  else 
+    Country=$1
+    grep  "${Country^}" ~/.cache/corona 2>/dev/null |
+      sed "s/\s*//g ; s/║//g ; s/│/;/g" |
+      awk -F";" '{ print ("Rank : ") $1 "\n"("Country ") $2 "\n" ("Confirmed: ") ($3)"\n" ("Recovered : ") ($4)"\n "("Deaths :") ($5)"\n " ("Active :")  ($6) }' 
+  fi
+}
+
+GetCountry $1
+
+
